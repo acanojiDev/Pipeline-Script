@@ -1,0 +1,18 @@
+stages:
+  - build
+
+variables:
+  NODE_ENV: production
+
+build-angular:
+  stage: build
+  image: node:20
+  before_script:
+    - npm install
+  script:
+    # 1️⃣ Actualizar package.json con la versión del tag
+    - node scripts/set-version.js
+    # 2️⃣ Compilar Angular
+    - npm run build
+  only:
+    - tags      # Solo se ejecuta cuando haces push de un tag
